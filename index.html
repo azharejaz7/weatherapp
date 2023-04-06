@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App  by Az  </title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <!-- <style>
+        
+
+      
+
+       nav { 
+        background-color: black;
+        height: 60px;
+        width: 100%;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        color: aliceblue;
+        font-size: 30px;
+        text-align: center;
+        content: center;
+        text-transform: uppercase;
+        margin: auto;
+       
+       } 
+
+       input {
+        
+        width: 70%;
+        height: 40px;
+        
+        border-radius:  20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        padding-left: 2%;
+       
+       }
+       button {
+        width: 15%;
+        height: 50px;
+        
+        border-radius:  20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        padding-left: 2%;
+
+       }
+
+       body{
+        margin: auto;
+        width: 100%;
+        
+       }
+
+       .fconailner {
+        margin: auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: center;
+        flex-wrap: wrap;
+                
+       }
+
+       .fconailner-temp-c{
+        margin: auto;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        content: center;
+        flex-wrap: wrap;
+        
+
+       }
+
+       .tempcss {
+        font-size: 500%;
+        font-family: 'Times New Roman', Times, serif;
+       }
+       .fContainer-temp-item-Shirink {
+     
+               flex-shrink: 4;
+        }
+        .fContainer-temp-item {
+
+                padding: 50px;
+               
+        }
+        .fContainer-item {
+
+                padding: 50px;
+        }
+    </style> -->
+    <style>
+        
+       nav {
+        background-color: black;
+        margin: 0px;
+        height: 80px;
+        width: 100%;
+        font-family: 'Times New Roman', Times, serif;
+        color: aliceblue;
+        font-size: 30px;
+        text-align: center;
+        text-transform: uppercase;
+        margin: auto;
+       
+       } 
+       nav > h4 {
+        margin: 0px;
+        padding-top: 25px;
+       }
+
+       input {
+        
+        width: 70%;
+        height: 40px;
+        
+        border-radius:  20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        padding-left: 2%;
+       
+       }
+       button {
+        border: none;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+
+        width: 15%;
+        height: 50px;
+        border-radius:  20px;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 20px;
+        padding-left: 2%;
+        background-color: white;
+        color: black;
+        border: 2px solid #555555;
+
+       }
+
+       button:hover {
+        background-color: #555555;
+        color: white;
+        }
+
+       .fconailner {
+        margin: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        content: center;
+     
+        
+
+                
+       }
+       .fContainer-item {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        column-gap: 5px;
+        padding: 7px;
+       
+        }
+        .fContainer-item >form {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tempcss {
+        font-size: 500%;
+        font-family: 'Times New Roman', Times, serif;
+       }
+
+        .fContainer-item .wetherDetails {
+            column-gap: 10px;
+           
+            margin: 1em;
+            
+        }
+        .fContainer-item .wetherDetails > p {
+         
+            margin: 0px;
+            margin-top: 5px;
+            border-bottom: 1px solid gray;
+            padding-left: 5px;
+            padding-right: 10px;
+            
+        }
+        .VerticalLine {
+            border-left: 1px solid gray;
+            height: 70px;
+        
+        }
+    </style>
+</head>
+<!-- Javascript Code for call API-->
+    <script>
+        function getWeatherData() {
+            // get city name
+            let searchCity = document.querySelector("#cityName").value;
+
+            axios.get(`http://api.weatherapi.com/v1/current.json?key=2caff4a3c0594dd38dd55517232703&q=${searchCity}`)
+                .then(function (response) {
+                    // handle success
+                    const data = response.data;
+                    console.log(data);
+                    console.log(data.current.feelslike_f);
+                    
+                    document.querySelector("#temp_c").innerHTML = "Temp C : " +  data.current.temp_c+"°C";
+                    document.querySelector("#wind_kph").innerHTML = "Wind : " +  data.current.wind_kph +" km/h";
+                    document.querySelector("#humidity").innerHTML = "Humidity : " +  data.current.humidity +"%";
+                    document.querySelector("#vis_km").innerHTML = "Visibility km : " +  data.current.vis_km;
+                    document.querySelector("#precip_in").innerHTML = "precip_in : " +  ((data.current.precip_in)*100) +"%";
+                    document.querySelector("#conditionText").innerHTML = "" +  data.current.condition.text;
+                    document.getElementById("conditionIcon").src =  "http:"+ data.current.condition.icon;
+                  
+                })
+                
+                axios.get(`http://api.weatherapi.com/v1/forecast.json?key=2caff4a3c0594dd38dd55517232703&q=${searchCity}`)
+                .then(function (response1) {
+                    // handle success
+                    const forcastData = response1.data;
+                    console.log("Forcast Data : ",forcastData);
+                    console.log(forcastData.forecast.forecastday[0].day.maxtemp_c);
+                    
+                     document.querySelector("#maxtemp_c").innerHTML = "Max : " +  forcastData.forecast.forecastday[0].day.maxtemp_c+"°C";
+                     document.querySelector("#mintemp_c").innerHTML = "Min : " +  forcastData.forecast.forecastday[0].day.mintemp_c+"°C";
+                     
+                })
+
+                let cssClass1 = document.getElementById("applyCss1");
+                cssClass1.classList.add("wetherDetails");
+                let cssClass2 = document.getElementById("applyCss2");
+                cssClass2.classList.add("wetherDetails");
+                let VerticalLine = document.getElementById("VerticalLine");
+                VerticalLine.classList.add("VerticalLine");
+                
+        }
+        
+
+    </script>
+
+
+<body>
+
+<!-- Nav bar -->
+    <div>
+    <nav> <h4>Azhar Ejaz - Weather App</h4></nav>
+    </div>
+<!-- Search Bar -->
+    <div class="fconailner">
+        <div class="fContainer-item">
+             <form onsubmit="getWeatherData(); return false"> 
+            
+                <input type="text" placeholder="Enter Youre City Name" id="cityName" />
+                <button type="submit">Check Weather</button>
+   
+            
+            </form>
+        </div>
+    </div>
+
+
+
+      <!-- content container  -->
+    <div class="fconailner" >
+        <!-- current temprature container -->
+        <div class="fContainer-item">
+
+            <div  class="wetherDetails"> 
+                <img id="conditionIcon" src="" alt="" >
+                <div>
+                    <span id="conditionText"></span>
+                </div>
+            </div>
+            <div class="wetherDetails">
+                <span class="tempcss" id="temp_c"></span> <br>
+            </div>
+            
+        </div>
+        
+   
+        <!-- weather detials contaner -->
+            <div class="fContainer-item">
+                <div id="applyCss1"  class="">
+                <p id="wind_kph"></p>
+                <p id="humidity"></p>
+                <p id="vis_km"></p>
+            </div>
+
+            <div id="VerticalLine"  class=""></div>
+
+            <div  id="applyCss2"  class="" >
+                <p id="maxtemp_c"></p> 
+                <p id="mintemp_c"></p>
+                <p id="precip_in"></p>
+            </div>
+            </div>
+               
+        <!-- footer not needed -->
+    </div>
+       
+        
+       
+
+
+
+
+    
+</body>
+</html>
